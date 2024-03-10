@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CropMaskViewManagerProtocol {
+public protocol CropMaskViewManagerProtocol {
     func setup(in view: UIView, cropRatio: CGFloat)
     func removeMaskViews()
     func showDimmingBackground(animated: Bool)

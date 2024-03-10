@@ -13,7 +13,7 @@ public enum CropToolbarMode {
     case embedded // Without cancel and crop buttons
 }
 
-public final class CropToolbar: UIView, CropToolbarProtocol {
+public class CropToolbar: UIView, CropToolbarProtocol {
     public var config = CropToolbarConfig()
     public var iconProvider: CropToolbarIconProvider?
     

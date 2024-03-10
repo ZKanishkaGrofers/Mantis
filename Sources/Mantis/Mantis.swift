@@ -25,8 +25,8 @@
 import UIKit
 
 // MARK: - APIs
-public func cropViewController(image: UIImage,
-                               config: Mantis.Config = Mantis.Config(),
+ func cropViewController(image: UIImage,
+                               config: Mantis.CropConfig = Mantis.CropConfig(),
                                cropToolbar: CropToolbarProtocol = CropToolbar(frame: .zero),
                                rotationControlView: RotationControlViewProtocol? = nil) -> Mantis.CropViewController {
     let cropViewController = CropViewController(config: config)
@@ -37,8 +37,8 @@ public func cropViewController(image: UIImage,
     return cropViewController
 }
 
-public func cropViewController<T: CropViewController>(image: UIImage,
-                                                      config: Mantis.Config = Mantis.Config(),
+ func cropViewController<T: CropViewController>(image: UIImage,
+                                                      config: Mantis.CropConfig = Mantis.CropConfig(),
                                                       cropToolbar: CropToolbarProtocol = CropToolbar(frame: .zero),
                                                       rotationControlView: RotationControlViewProtocol? = nil) -> T {
     let cropViewController = T(config: config)
@@ -49,9 +49,9 @@ public func cropViewController<T: CropViewController>(image: UIImage,
     return cropViewController
 }
 
-public func setupCropViewController(_ cropViewController: Mantis.CropViewController,
+ func setupCropViewController(_ cropViewController: Mantis.CropViewController,
                                     with image: UIImage,
-                                    and config: Mantis.Config = Mantis.Config(),
+                                    and config: Mantis.CropConfig = Mantis.CropConfig(),
                                     cropToolbar: CropToolbarProtocol = CropToolbar(frame: .zero),
                                     rotationControlView: RotationControlViewProtocol? = nil) {
     cropViewController.config = config
@@ -78,11 +78,11 @@ public struct Language {
 }
 
 public func chooseLanguage(_ language: Language) {
-    Mantis.Config.language = language
+    Mantis.CropConfig.language = language
 }
 
 public func resetLanguage() {
-    Mantis.Config.language = nil
+    Mantis.CropConfig.language = nil
 }
 
 // MARK: - internal section
@@ -90,16 +90,15 @@ var localizationConfig = LocalizationConfig()
 
 // MARK: - private section
 private(set) var bundle: Bundle? = {
-    return Mantis.Config.bundle
+    return Mantis.CropConfig.bundle
 }()
 
-private func buildCropView(withImage image: UIImage,
+public func buildCropView(withImage image: UIImage,
                            config cropViewConfig: CropViewConfig,
                            rotationControlView: RotationControlViewProtocol?) -> CropViewProtocol {
     let cropAuxiliaryIndicatorView = CropAuxiliaryIndicatorView(frame: .zero,
                                                                 cropBoxHotAreaUnit: cropViewConfig.cropBoxHotAreaUnit,
-                                                                disableCropBoxDeformation: cropViewConfig.disableCropBoxDeformation,
-                                                                style: cropViewConfig.cropAuxiliaryIndicatorStyle)
+                                                                disableCropBoxDeformation: cropViewConfig.disableCropBoxDeformation)
     let imageContainer = ImageContainer(image: image)
     let cropView = CropView(image: image,
                             cropViewConfig: cropViewConfig,
@@ -113,21 +112,21 @@ private func buildCropView(withImage image: UIImage,
     return cropView
 }
 
-private func buildCropViewModel(with cropViewConfig: CropViewConfig) -> CropViewModelProtocol {
+public func buildCropViewModel(with cropViewConfig: CropViewConfig) -> CropViewModelProtocol {
     CropViewModel(
         cropViewPadding: cropViewConfig.padding,
         hotAreaUnit: cropViewConfig.cropBoxHotAreaUnit
     )
 }
 
-private func buildCropWorkbenchView(with cropViewConfig: CropViewConfig, and imageContainer: ImageContainerProtocol) -> CropWorkbenchViewProtocol {
+public func buildCropWorkbenchView(with cropViewConfig: CropViewConfig, and imageContainer: ImageContainerProtocol) -> CropWorkbenchViewProtocol {
     CropWorkbenchView(frame: .zero,
                    minimumZoomScale: cropViewConfig.minimumZoomScale,
                    maximumZoomScale: cropViewConfig.maximumZoomScale,
                    imageContainer: imageContainer)
 }
 
-private func buildCropMaskViewManager(with cropViewConfig: CropViewConfig) -> CropMaskViewManagerProtocol {
+public func buildCropMaskViewManager(with cropViewConfig: CropViewConfig) -> CropMaskViewManagerProtocol {
     let dimmingView = CropDimmingView(cropShapeType: cropViewConfig.cropShapeType)
     let visualEffectView = CropMaskVisualEffectView(cropShapeType: cropViewConfig.cropShapeType,
                                                     effectType: cropViewConfig.cropMaskVisualEffectType)
@@ -140,7 +139,7 @@ private func buildCropMaskViewManager(with cropViewConfig: CropViewConfig) -> Cr
     return CropMaskViewManager(dimmingView: dimmingView, visualEffectView: visualEffectView)
 }
 
-private func setupRotationControlViewIfNeeded(withConfig cropViewConfig: CropViewConfig,
+public func setupRotationControlViewIfNeeded(withConfig cropViewConfig: CropViewConfig,
                                               cropView: CropView,
                                               rotationControlView: RotationControlViewProtocol?) {
     if let rotationControlView = rotationControlView {

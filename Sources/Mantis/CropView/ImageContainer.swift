@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ImageContainer: UIView {
+ open class ImageContainer: UIView {
     lazy private var imageView: UIImageView = {
         let imageView = UIImageView(frame: bounds)
         addSubview(imageView)
@@ -22,23 +22,34 @@ final class ImageContainer: UIView {
         return imageView
     }()
     
-    init(image: UIImage) {
+     public init(image: UIImage) {
         super.init(frame: .zero)
         imageView.image = image
+        layoutIfNeeded()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = bounds
     }
+    
+     public func resetImage(image: UIImage) {
+        UIView.transition(with: imageView,
+                          duration: 0.7,
+                          options: [.allowAnimatedContent, .transitionCrossDissolve]) {
+            self.imageView.image = image
+        }
+        layoutIfNeeded()
+    }
+
 }
 
 extension ImageContainer: ImageContainerProtocol {
-    func contains(rect: CGRect, fromView view: UIView, tolerance: CGFloat = 0.5) -> Bool {
+    public func contains(rect: CGRect, fromView view: UIView, tolerance: CGFloat = 0.5) -> Bool {
         let newRect = view.convert(rect, to: self)
         
         let point1 = newRect.origin
@@ -49,7 +60,7 @@ extension ImageContainer: ImageContainerProtocol {
         return refBounds.contains(point1) && refBounds.contains(point2)
     }
     
-    func getCropRegion(withCropBoxFrame cropBoxFrame: CGRect, cropView: UIView) -> CropRegion {
+    public func getCropRegion(withCropBoxFrame cropBoxFrame: CGRect, cropView: UIView) -> CropRegion {
         var topLeft = cropView.convert(CGPoint(x: cropBoxFrame.minX, y: cropBoxFrame.minY), to: self)
         var topRight = cropView.convert(CGPoint(x: cropBoxFrame.maxX, y: cropBoxFrame.minY), to: self)
         var bottomLeft = cropView.convert(CGPoint(x: cropBoxFrame.minX, y: cropBoxFrame.maxY), to: self)
@@ -60,9 +71,11 @@ extension ImageContainer: ImageContainerProtocol {
         bottomLeft = CGPoint(x: bottomLeft.x / bounds.width, y: bottomLeft.y / bounds.height)
         bottomRight = CGPoint(x: bottomRight.x / bounds.width, y: bottomRight.y / bounds.height)
         
-        return CropRegion(topLeft: topLeft,
-                          topRight: topRight,
-                          bottomLeft: bottomLeft,
-                          bottomRight: bottomRight)
+        let calculatedRegion = CropRegion(topLeft: topLeft,
+                                          topRight: topRight,
+                                          bottomLeft: bottomLeft,
+                                          bottomRight: bottomRight)
+        
+       return calculatedRegion
     }
 }

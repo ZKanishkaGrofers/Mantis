@@ -8,19 +8,19 @@
 
 import UIKit
 
-enum RatioType {
+public enum RatioType {
     case horizontal
     case vertical
 }
 
-final class RatioPresenter {
-    var didGetRatio: ((Double) -> Void) = { _ in }
-    private var type: RatioType = .vertical
+open class RatioPresenter {
+    public var didGetRatio: ((Double) -> Void) = { _ in }
+    public var type: RatioType = .vertical
     private var originalRatioH: Double
-    private var ratios: [RatioItemType]
+    public var ratios: [RatioItemType]
     private var fixRatiosShowType: FixedRatiosShowType = .adaptive
 
-    init(type: RatioType, originalRatioH: Double, ratios: [RatioItemType] = [], fixRatiosShowType: FixedRatiosShowType = .adaptive) {
+    public init(type: RatioType, originalRatioH: Double, ratios: [RatioItemType] = [], fixRatiosShowType: FixedRatiosShowType = .adaptive) {
         self.type = type
         self.originalRatioH = originalRatioH
         self.ratios = ratios
@@ -49,7 +49,7 @@ final class RatioPresenter {
         }
     }
 
-    func present(by viewController: UIViewController, in sourceView: UIView) {
+    public func present(by viewController: UIViewController, in sourceView: UIView) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         for ratio in ratios {

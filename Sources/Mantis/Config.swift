@@ -25,13 +25,13 @@
 import UIKit
 
 // MARK: - Localization
-public final class LocalizationConfig {
-    public var bundle: Bundle? = Mantis.Config.bundle
+public class LocalizationConfig {
+    public var bundle: Bundle? = Mantis.CropConfig.bundle
     public var tableName = "MantisLocalizable"
 }
     
 // MARK: - Config
-public struct Config {
+open class CropConfig {
     
     public enum CropMode {
         case sync
@@ -40,7 +40,7 @@ public struct Config {
         
     public var cropMode: CropMode = .sync
     
-    public var cropViewConfig = CropViewConfig()    
+    public var cropViewConfig = CropViewConfig()
     public var cropToolbarConfig = CropToolbarConfig()
     
     public var ratioOptions: RatioOptions = .all
@@ -54,7 +54,7 @@ public struct Config {
     static private var bundleIdentifier: String = {
         return "com.echo.framework.Mantis"
     }()
-
+    
     static private(set) var bundle: Bundle? = {
         guard let bundle = Bundle(identifier: bundleIdentifier) else {
             return nil
@@ -71,12 +71,12 @@ public struct Config {
 
     public init() {}
 
-    mutating public func addCustomRatio(byHorizontalWidth width: Int, andHorizontalHeight height: Int) {
+     public func addCustomRatio(byHorizontalWidth width: Int, andHorizontalHeight height: Int) {
         assert(width > 0 && height > 0)
         customRatios.append((width, height))
     }
 
-    mutating public func addCustomRatio(byVerticalWidth width: Int, andVerticalHeight height: Int) {
+     public func addCustomRatio(byVerticalWidth width: Int, andVerticalHeight height: Int) {
         assert(width > 0 && height > 0)
         customRatios.append((height, width))
     }
@@ -85,7 +85,7 @@ public struct Config {
         return !customRatios.isEmpty
     }
 
-    func getCustomRatioItems() -> [RatioItemType?] {
+   public func getCustomRatioItems() -> [RatioItemType?] {
         return customRatios.map {
             RatioItemType(nameH: String("\($0.width):\($0.height)"), ratioH: Double($0.width)/Double($0.height),
                           nameV: String("\($0.height):\($0.width)"), ratioV: Double($0.height)/Double($0.width))

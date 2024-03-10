@@ -8,13 +8,13 @@
 
 import Foundation
 
-enum ImageRotationType: CGFloat {
+public enum ImageRotationType: CGFloat {
     case none = 0
     case counterclockwise90 = -90
     case counterclockwise180 = -180
     case counterclockwise270 = -270
     
-    mutating func counterclockwiseRotate90() {
+    mutating public func counterclockwiseRotate90() {
         if self == .counterclockwise270 {
             self = .none
         } else {
@@ -22,7 +22,7 @@ enum ImageRotationType: CGFloat {
         }
     }
     
-    mutating func clockwiseRotate90() {
+    mutating public func clockwiseRotate90() {
         switch self {
         case .counterclockwise90:
             self = .none
@@ -35,12 +35,12 @@ enum ImageRotationType: CGFloat {
         }
     }
     
-    var isRotatedByMultiple180: Bool {
+    public var isRotateByMultiple180: Bool {
         return self == .none || self == .counterclockwise180
     }
 }
 
-final class CropViewModel: CropViewModelProtocol {
+class CropViewModel: CropViewModelProtocol {
     init(
         cropViewPadding: CGFloat,
         hotAreaUnit: CGFloat
@@ -77,7 +77,7 @@ final class CropViewModel: CropViewModelProtocol {
     }
     
     var rotationType: ImageRotationType = .none
-    var fixedImageRatio: CGFloat = -1    
+    var aspectRatio: CGFloat = -1
     var cropLeftTopOnImage = CGPoint.zero
     var cropRightBottomOnImage = CGPoint(x: 1, y: 1)
     
@@ -95,8 +95,8 @@ final class CropViewModel: CropViewModelProtocol {
         rotationType = .none
         
         if forceFixedRatio == false {
-            fixedImageRatio = -1
-        }        
+            aspectRatio = -1
+        }
         
         cropLeftTopOnImage = .zero
         cropRightBottomOnImage = CGPoint(x: 1, y: 1)
@@ -185,10 +185,10 @@ final class CropViewModel: CropViewModelProtocol {
         var cropBoxFrame = refCropBox
         let center = cropBoxFrame.center
         
-        if fixedImageRatio > CGFloat(imageHorizontalToVerticalRatio.ratio) {
-            cropBoxFrame.size.height = cropBoxFrame.width / fixedImageRatio
+        if aspectRatio > CGFloat(imageHorizontalToVerticalRatio.ratio) {
+            cropBoxFrame.size.height = cropBoxFrame.width / aspectRatio
         } else {
-            cropBoxFrame.size.width = cropBoxFrame.height * fixedImageRatio
+            cropBoxFrame.size.width = cropBoxFrame.height * aspectRatio
         }
         
         cropBoxFrame.origin.x = center.x - cropBoxFrame.width / 2

@@ -13,16 +13,16 @@ public protocol ActivityIndicatorProtocol: UIView {
     func stopAnimating()
 }
 
-protocol CropViewProtocol: UIView {
+public protocol CropViewProtocol: UIView {
     var image: UIImage { get set }
     var aspectRatioLockEnabled: Bool { get set }
     var delegate: CropViewDelegate? { get set }
     
-    func initialSetup(delegate: CropViewDelegate, presetFixedRatioType: PresetFixedRatioType)
+    func initialSetup(delegate: CropViewDelegate, presetFixedRatioType: PresetFixedRatioType, ignoreForceFixedRatio: Bool?)
     func setViewDefaultProperties()
     func getRatioType(byImageIsOriginalHorizontal isHorizontal: Bool) -> RatioType
     func getImageHorizontalToVerticalRatio() -> Double
-    func resetComponents()
+    func resetComponents(image: UIImage?, aspectRatio: CGFloat?)
     func prepareForViewWillTransition()
     func handleViewWillTransition()
     func setFixedRatio(_ ratio: Double, zoom: Bool, presetFixedRatioType: PresetFixedRatioType)
@@ -35,9 +35,6 @@ protocol CropViewProtocol: UIView {
     func getTransformInfo(byNormalizedInfo normalizedInfo: CGRect) -> Transformation
     func processPresetTransformation(completion: (Transformation) -> Void)
         
-    func setFreeCrop()
-    func horizontallyFlip()
-    func verticallyFlip()
     func reset()
     func crop() -> CropOutput
     func crop(_ image: UIImage) -> CropOutput
@@ -45,16 +42,11 @@ protocol CropViewProtocol: UIView {
     
     func getCropInfo() -> CropInfo
     func getExpectedCropImageSize() -> CGSize
-    
-    func rotate(by angle: Angle)
-    func makeTransformation() -> Transformation
 }
 
 extension CropViewProtocol {
-    func setViewDefaultProperties() {
+    public func setViewDefaultProperties() {
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
-    func rotate(by angle: Angle) {}
 }

@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct ImageHorizontalToVerticalRatio {
+public struct ImageHorizontalToVerticalRatio {
     var ratio: Double
 }
 
-protocol CropViewModelProtocol: AnyObject {
+public protocol CropViewModelProtocol: AnyObject {
     var cropBoxFrameChanged: (_ frame: CGRect) -> Void { get set }
     var cropBoxFrame: CGRect { get set }
     var cropBoxOriginFrame: CGRect { get set }
@@ -28,7 +28,7 @@ protocol CropViewModelProtocol: AnyObject {
     var degrees: CGFloat { get set }
     var radians: CGFloat { get }
     var rotationType: ImageRotationType { get set }
-    var fixedImageRatio: CGFloat { get set }
+    var aspectRatio: CGFloat { get set }
     var cropLeftTopOnImage: CGPoint { get set }
     var cropRightBottomOnImage: CGPoint { get set }
     var horizontallyFlip: Bool { get set }

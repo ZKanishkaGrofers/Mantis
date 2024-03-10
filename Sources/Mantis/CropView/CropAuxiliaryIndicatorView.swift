@@ -8,9 +8,9 @@
 
 import UIKit
 
-final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtocol {
-    private var boarderNormalColor = UIColor.white
-    private var boarderHintColor = UIColor.white
+open class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtocol {
+    private var boarderNormalColor = UIColor.black
+    private var boarderHintColor = UIColor.black
     private let cornerHandleLength = CGFloat(20.0)
     private let edgeLineHandleLength = CGFloat(30.0)
     private let handleThickness = CGFloat(3.0)
@@ -19,20 +19,19 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
 
     private var hintLine = UIView()
     private var tappedEdge: CropViewAuxiliaryIndicatorHandleType = .none
-    private var gridMainColor = UIColor.white
-    private var gridSecondaryColor = UIColor.lightGray
+    private var gridMainColor = UIColor.black
+    private var gridSecondaryColor = UIColor.black
     private var disableCropBoxDeformation = false
-    private var style: CropAuxiliaryIndicatorStyleType = .normal
     
-    var cropBoxHotAreaUnit: CGFloat = 42
+    public var cropBoxHotAreaUnit: CGFloat = 42
     
-    var gridHidden = true {
+    public var gridHidden = true {
         didSet {
             setNeedsDisplay()
         }
     }
 
-    var gridLineNumberType: GridLineNumberType = .crop
+    public var gridLineNumberType: GridLineNumberType = .crop
     
     private var borderLine: UIView = UIView()
     private var cornerHandles: [UIView] = []
@@ -40,7 +39,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
     
     var accessibilityHelperViews: [UIView] = []
     
-    override var frame: CGRect {
+    public override var frame: CGRect {
         didSet {
             if !cornerHandles.isEmpty {
                 layoutLines()
@@ -49,20 +48,16 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
         }
     }
     
-    init(frame: CGRect, 
-         cropBoxHotAreaUnit: CGFloat,
-         disableCropBoxDeformation: Bool = false,
-         style: CropAuxiliaryIndicatorStyleType = .normal) {
+    public init(frame: CGRect, cropBoxHotAreaUnit: CGFloat, disableCropBoxDeformation: Bool = false) {
         super.init(frame: frame)
         clipsToBounds = false
         backgroundColor = .clear
         self.cropBoxHotAreaUnit = cropBoxHotAreaUnit
         self.disableCropBoxDeformation = disableCropBoxDeformation
-        self.style = style
         setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         backgroundColor = .clear
     }
@@ -70,11 +65,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
     private func createNewLine() -> UIView {
         let view = UIView()
         view.frame = .zero
-        if style == .normal {
-            view.backgroundColor = .white
-        } else {
-            view.backgroundColor = .clear
-        }
+        view.backgroundColor = .black
         addSubview(view)
         return view
     }
@@ -83,14 +74,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
         borderLine = createNewLine()
         borderLine.layer.backgroundColor = UIColor.clear.cgColor
         borderLine.layer.borderWidth = borderThickness
-        
-        if style == .normal {
-            borderLine.layer.borderColor = boarderNormalColor.cgColor
-            hintLine.backgroundColor = boarderHintColor
-        } else {
-            borderLine.layer.borderColor = UIColor.clear.cgColor
-            hintLine.backgroundColor = .clear
-        }
+        borderLine.layer.borderColor = boarderNormalColor.cgColor
         
         for _ in 0..<8 {
             cornerHandles.append(createNewLine())
@@ -100,10 +84,12 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
             edgeLineHandles.append(createNewLine())
         }
         
+        hintLine.backgroundColor = boarderHintColor
+        
         setupAccessibilityHelperViews()
     }
     
-    override func didMoveToSuperview() {
+    public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         
         if !cornerHandles.isEmpty {
@@ -111,7 +97,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
         }
     }
     
-    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         var result = false
         
         accessibilityHelperViews.forEach {
@@ -122,11 +108,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
         return result
     }
     
-    override func draw(_ rect: CGRect) {
-        if style == .transparent {
-            return
-        }
-        
+    public override func draw(_ rect: CGRect) {
         if !gridHidden {
             let indicatorLineNumber = gridLineNumberType.getIndicatorLineNumber()
             
@@ -176,11 +158,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
                                   height: bounds.height + 2 * borderThickness)
         borderLine.layer.backgroundColor = UIColor.clear.cgColor
         borderLine.layer.borderWidth = borderThickness
-        if style == .normal {
-            borderLine.layer.borderColor = boarderNormalColor.cgColor
-        } else {
-            borderLine.layer.borderColor = UIColor.clear.cgColor
-        }
+        borderLine.layer.borderColor = boarderNormalColor.cgColor
     }
     
     private func layoutCornerHandles() {
@@ -248,7 +226,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
         }
     }
             
-    func handleIndicatorHandleTouched(with tappedEdge: CropViewAuxiliaryIndicatorHandleType) {
+    public func handleIndicatorHandleTouched(with tappedEdge: CropViewAuxiliaryIndicatorHandleType) {
         guard tappedEdge != .none  else {
             return
         }
@@ -296,7 +274,7 @@ final class CropAuxiliaryIndicatorView: UIView, CropAuxiliaryIndicatorViewProtoc
         handleHintLine()
     }
     
-    func handleEdgeUntouched() {
+    public func handleEdgeUntouched() {
         gridHidden = true
         hintLine.removeFromSuperview()
         tappedEdge = .none

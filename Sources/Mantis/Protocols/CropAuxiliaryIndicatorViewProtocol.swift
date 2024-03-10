@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum GridLineNumberType {
+public enum GridLineNumberType {
     case none
     case crop
     case rotate
@@ -24,7 +24,7 @@ enum GridLineNumberType {
     }
 }
 
-protocol CropAuxiliaryIndicatorViewProtocol: UIView {
+public protocol CropAuxiliaryIndicatorViewProtocol: UIView {
     var gridLineNumberType: GridLineNumberType { get set }
     var gridHidden: Bool { get set }
     var cropBoxHotAreaUnit: CGFloat { get set }

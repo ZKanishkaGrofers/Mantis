@@ -8,13 +8,13 @@
 
 import UIKit
 
-final class CropDimmingView: UIView, CropMaskProtocol {
-    var overLayerFillColor = UIColor.black.cgColor    
+public class CropDimmingView: UIView, CropMaskProtocol {
+    var overLayerFillColor = UIColor.black.cgColor
     var maskLayer: CALayer?
     var cropShapeType: CropShapeType = .rect
     var imageRatio: CGFloat = 1.0
     
-    convenience init(cropShapeType: CropShapeType = .rect) {
+    public convenience init(cropShapeType: CropShapeType = .rect) {
         self.init(frame: CGRect.zero)
         self.cropShapeType = cropShapeType
     }

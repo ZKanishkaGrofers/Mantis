@@ -24,17 +24,15 @@
 
 import UIKit
 
-public typealias Transformation = (
-    offset: CGPoint,
-    rotation: CGFloat,
-    scale: CGFloat,
-    isManuallyZoomed: Bool,
-    initialMaskFrame: CGRect,
-    maskFrame: CGRect,
-    cropWorkbenchViewBounds: CGRect,
-    horizontallyFlipped: Bool,
-    verticallyFlipped: Bool
-)
+public struct Transformation {
+    public var offset: CGPoint
+    public var rotation: CGFloat
+    public var scale: CGFloat
+    public var manualZoomed: Bool
+    public var initialMaskFrame: CGRect
+    public var maskFrame: CGRect
+    public var cropWorkbenchViewBounds: CGRect
+}
 
 public struct CropRegion: Equatable {
     public var topLeft: CGPoint
@@ -43,18 +41,19 @@ public struct CropRegion: Equatable {
     public var bottomRight: CGPoint
 }
 
-public typealias CropInfo = (
-    translation: CGPoint,
-    rotation: CGFloat,
-    scaleX: CGFloat,
-    scaleY: CGFloat,
-    cropSize: CGSize,
-    imageViewSize: CGSize,
-    cropRegion: CropRegion
-)
+public struct CropInfo {
+    public var translation: CGPoint
+    public var rotation: CGFloat
+    public var scaleX: CGFloat
+    public var scaleY: CGFloat
+    public var cropSize: CGSize
+    public var imageViewSize: CGSize
+    public var originalPixels: CGSize
+    public var cropRegion: CropRegion
+}
 
-typealias CropOutput = (
-    croppedImage: UIImage?,
-    transformation: Transformation,
-    cropInfo: CropInfo
-)
+public struct CropOutput {
+    public var croppedImage: UIImage?
+    public var transformation: Transformation
+    public var cropInfo: CropInfo
+}

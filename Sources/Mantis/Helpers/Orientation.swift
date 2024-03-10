@@ -7,7 +7,7 @@
 import UIKit
 
 public struct Orientation {
-    static var interfaceOrientation: UIInterfaceOrientation {
+    public static var interfaceOrientation: UIInterfaceOrientation {
         if #available(iOS 13, macOS 10.13, *) {
             return (application.windows.first?.windowScene?.interfaceOrientation)!
         } else {

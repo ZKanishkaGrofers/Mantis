@@ -133,7 +133,7 @@ public enum FixedRatiosShowType {
     case vertical
 }
 
-enum RotateBy90DegreeType {
+public enum RotateBy90DegreeType {
     case clockwise
     case counterClockwise
     
@@ -146,12 +146,7 @@ enum RotateBy90DegreeType {
     }
 }
 
-public enum CropAuxiliaryIndicatorStyleType {
-    case normal
-    case transparent
-}
-
-enum CropViewAuxiliaryIndicatorHandleType: Int {
+public enum CropViewAuxiliaryIndicatorHandleType: Int {
     case none
     case topLeft
     case top
@@ -163,11 +158,7 @@ enum CropViewAuxiliaryIndicatorHandleType: Int {
     case left
 }
 
-enum AutoLayoutPriorityType: Float {
+public enum AutoLayoutPriorityType: Float {
     case high = 10000
     case low = 1
-}
-
-enum Constants {
-    static let rotationDegreeLimit: CGFloat = 45
 }

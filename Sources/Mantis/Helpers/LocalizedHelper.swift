@@ -59,7 +59,7 @@ struct LocalizedHelper {
     }
     
     static private func convertToLanguageBundleIfNeeded(by bundle: Bundle?) -> Bundle? {
-        if let languageCode = Mantis.Config.language?.code,
+        if let languageCode = Mantis.CropConfig.language?.code,
            let languageBundlePath = bundle?.path(forResource: languageCode, ofType: "lproj"),
            let languageBundle = Bundle(path: languageBundlePath) {
             return languageBundle

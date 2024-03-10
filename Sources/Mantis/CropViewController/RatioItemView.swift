@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RatioItemView: UIView {
+class RatioItemView: UIView {
     var didGetRatio: ((RatioItemType) -> Void) = { _ in }
     
     var selected = false {
@@ -31,7 +31,7 @@ final class RatioItemView: UIView {
     
     var ratio: RatioItemType!
     
-    var type: RatioType! {
+    public var type: RatioType! {
         didSet {
             titleLabel.text = type == .vertical ? ratio.nameV : ratio.nameH
         }

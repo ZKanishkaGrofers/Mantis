@@ -31,8 +31,6 @@ public struct CropViewConfig {
     
     public var cropMaskVisualEffectType: CropMaskVisualEffectType = .blurDark
     
-    public var cropAuxiliaryIndicatorStyle: CropAuxiliaryIndicatorStyleType = .normal
-    
     public var presetTransformationType: PresetTransformationType = .none
     
     public var minimumZoomScale: CGFloat = 1 {
@@ -63,8 +61,6 @@ public struct CropViewConfig {
     public var cropActivityIndicatorSize = CGSize(width: 100, height: 100)
     
     public var rotationControlViewHeight: CGFloat = 60
-    
-    public var rotateCropBoxFor90DegreeRotation = true
     
     var minimumCropBoxSize: CGFloat = 42
 

@@ -17,6 +17,7 @@ public struct RatioOptions: OptionSet {
     static public let square = RatioOptions(rawValue: 1 << 1)
     static public let extraDefaultRatios = RatioOptions(rawValue: 1 << 2)
     static public let custom = RatioOptions(rawValue: 1 << 3)
+    static public let a4 = RatioOptions(rawValue: 1 << 4)
     
-    static public let all: RatioOptions = [original, square, extraDefaultRatios, custom]
+    static public let all: RatioOptions = [original, square, extraDefaultRatios, custom, a4]
 }

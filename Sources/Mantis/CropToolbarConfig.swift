@@ -7,7 +7,7 @@
 
 import UIKit
 
-public struct CropToolbarConfig {
+ public struct CropToolbarConfig {
     public var heightForVerticalOrientation: CGFloat = 44 {
         didSet {
             assert(heightForVerticalOrientation >= 44)

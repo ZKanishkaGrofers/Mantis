@@ -41,6 +41,7 @@ struct CropBoxLockedAspectFrameUpdater {
         
         func handleLeftEdgeFrameUpdate() {
             updateHeightFromBothSides()
+            xDelta = max(0, xDelta)
             cropBoxFrame.origin.x = cropOriginFrame.origin.x + xDelta
             cropBoxFrame.size.width = cropOriginFrame.width - xDelta
             cropBoxFrame.size.height = cropBoxFrame.size.width / aspectRatio
@@ -48,12 +49,13 @@ struct CropBoxLockedAspectFrameUpdater {
         
         func handleRightEdgeFrameUpdate() {
             updateHeightFromBothSides()
-            cropBoxFrame.size.width = cropOriginFrame.width + xDelta
+            cropBoxFrame.size.width = min(cropOriginFrame.width + xDelta, contentFrame.height * aspectRatio)
             cropBoxFrame.size.height = cropBoxFrame.size.width / aspectRatio
         }
         
         func handleTopEdgeFrameUpdate() {
             updateWidthFromBothSides()
+            yDelta = max(0, yDelta)
             cropBoxFrame.origin.y = cropOriginFrame.origin.y + yDelta
             cropBoxFrame.size.height = cropOriginFrame.height - yDelta
             cropBoxFrame.size.width = cropBoxFrame.size.height * aspectRatio
@@ -61,7 +63,7 @@ struct CropBoxLockedAspectFrameUpdater {
         
         func handleBottomEdgeFrameUpdate() {
             updateWidthFromBothSides()
-            cropBoxFrame.size.height = cropOriginFrame.height + yDelta
+            cropBoxFrame.size.height = min(cropOriginFrame.height + yDelta, contentFrame.width / aspectRatio)
             cropBoxFrame.size.width = cropBoxFrame.size.height * aspectRatio
         }
         
@@ -129,7 +131,7 @@ struct CropBoxLockedAspectFrameUpdater {
             case .bottomRight:
                 handleBottomRightEdgeFrameUpdate()
             default:
-                break
+                print("none")
             }
         }
         
