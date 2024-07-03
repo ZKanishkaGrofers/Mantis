@@ -30,6 +30,7 @@ protocol CropViewDelegate: AnyObject {
     func cropViewDidBeginResize(_ cropView: CropViewProtocol)
     func cropViewDidEndResize(_ cropView: CropViewProtocol)
     func cropViewDidBeginCrop(_ cropView: CropViewProtocol)
+    func cropViewDidEndTouch(_ cropView: CropViewProtocol)
 }
 
 final class CropView: UIView {
@@ -176,6 +177,7 @@ final class CropView: UIView {
             adaptRotationControlViewToCropBoxIfNeeded()
             cropMaskViewManager.showVisualEffectBackground(animated: true)
             checkImageStatusChanged()
+            delegate?.cropViewDidEndTouch(self)
         }
     }
     
